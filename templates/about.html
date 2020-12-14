@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block contact %}
+
+{% load static %}
+<div class="site-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-left">
+          <div class="section-title mb-5">
+            <h2>About Us</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <p>
+            <img src="{% static '' %}images/big_img_1.jpg" alt="Image" class="img-fluid">
+          </p>
+        </div>
+        <div class="col-lg-6 pl-md-5">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam qui obcaecati eaque odio, alias nulla quae, aliquid, rerum consequuntur, quaerat blanditiis cupiditate eos doloribus dolor debitis! Ex eius deleniti, soluta!</p>
+          <p>Facilis sit molestiae deserunt quo corporis culpa dolorum animi architecto illum sapiente. Asperiores, placeat animi distinctio provident adipisci.</p>
+          <ul class="ul-check list-unstyled success mt-5">
+            <li>Lorem ipsum dolor sit.</li>
+            <li>Cupiditate dolores rerum, consequatur!</li>
+            <li>Quia dolor molestias voluptatem?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="row">
+            <div class="col-12">
+              <div class="section-title">
+                <h2>Editor's Pick</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="post-entry-1">
+                <a href="#"><img src="{{ author_post.0.thumnail.url }}" alt="Image" class="img-fluid"></a>
+                <h2><a href="#">{{ author_post.0.title }}</a></h2>
+                <p>{{ author_post.0.body|slice:":500" }}</p>
+                <div class="post-meta">
+                  <span class="d-block"><a href="#">{{ author_post.0.author.user.username  }}</a> in
+                    {% for cat in author_post.0.category.all %}
+  
+                    <a href="#"> {{cat.name }}</a>
+                    {% endfor %}
+  
+                    <span class="date-read">{{ author_post.0.publish.date }} <span class="mx-1">&bullet;</span>
+                      {{ author_post.0.read }} reads<span class="icon-star2"></span></span>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-6">
+              {% for post in author_post|slice:'1:' %}
+              <div class="post-entry-2 d-flex bg-light">
+                <div class="thumbnail" style="background-image: url({{post.thumnail.url}})"></div>
+                <div class="contents">
+                  <h2><a href="{% url 'post' post.id post.slug %}">{{post.title}}</a></h2>
+                  <div class="post-meta">
+  
+                    <span class="d-block"><a href="#">{{ post.author.user.username  }}</a> in
+                      {% for cat in post.category.all %}
+  
+                      <a href="#"> {{cat.name }}</a>
+                      {% endfor %}
+                      <span class="date-read">{{ post.publish.date }}<span class="mx-1">&bullet;
+  
+                        </span> {{ post.read }}
+                        <span class="icon-star2"></span>
+                      </span>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+  
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="section-title">
+            <h2>Trending</h2>
+          </div>
+          {% for post in trends %}
+          
+          
+  
+          <div class="trend-entry d-flex">
+            <div class="number align-self-start">{{ forloop.counter }}</div>
+            <div class="trend-contents">
+              <h2><a href="{% url 'post' post.id post.slug %}">{{ post.title }}</a></h2>
+              <div class="post-meta">
+                <span class="d-block">
+                  <a href="#">{{ post.author.user.username }}</a> in
+                  {% for cat in post.category.all %}
+  
+                  <a href="#">{{ cat.name }}</a>
+                  
+                  {% endfor %}
+                </span>
+                <span class="date-read">{{post.publish.date}} </span>
+              </div>
+            </div>
+          </div>
+         
+          {% endfor %}
+  
+  
+  
+          <p>
+            <a href="{% url 'view_all' 'trending' %}" class="more">See All Trends <span class="icon-keyboard_arrow_right"></span></a>
+          </p>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
